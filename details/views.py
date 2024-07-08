@@ -146,7 +146,7 @@ def users_record(request, id):
 class current_user_membership(APIView):
     def get(self, request):
         payload = authenticate(request)
-        current_user = User.objects.get(id=payload['id'])
+        current_user = User.objects.get(userId=payload['id'])
         if current_user:
             organisations = current_user.organisations.all()
             return Response({
@@ -165,7 +165,7 @@ class current_user_membership(APIView):
         
     def post(self, request):
         payload = authenticate(request)
-        current_user = User.objects.get(id=payload['id'])
+        current_user = User.objects.get(userId=payload['id'])
         if current_user:
             try:
                 organisation = Organisation.objects.create(name=request.data['name'], description=request.data['description'])
