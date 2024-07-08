@@ -20,10 +20,11 @@ class UserManager(BaseUserManager):
     
 # email='ola@mide.com', first_name='jeff', last_name='maine', phone='07048581078', password='jeffmaine'
 class User(AbstractBaseUser, PermissionsMixin):
-    first_name = models.CharField(max_length=255)
-    last_name = models.CharField(max_length=255)
+    userId = models.AutoField(primary_key=True)
+    firstName = models.CharField(max_length=255)
+    lastName = models.CharField(max_length=255)
     email = models.EmailField(unique=True)
-    phone = PhoneNumberField(blank=True, null=True)
+    phone = models.CharField(max_length=15)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
@@ -31,10 +32,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     USERNAME_FIELD = 'email'
 
-class Organization(models.Model):
+class Organisation(models.Model):
+    orgId = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField(max_length=255, blank=True)
-    users = models.ManyToManyField(User, related_name='organizations', blank=True)
+    users = models.ManyToManyField(User, related_name='organisations', blank=True)
 
     def __str__(self):
         return self.name

@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import User, Organization
+from .models import User, Organisation
 
-class OrganizationAdmin(admin.ModelAdmin):
-    list_display = ['name', 'id']
+class OrganisationAdmin(admin.ModelAdmin):
+    list_display = ['name', 'orgId']
 # Register your models here.
 admin.site.register(User)
-admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(Organisation, OrganisationAdmin)

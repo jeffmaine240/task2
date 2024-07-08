@@ -1,13 +1,12 @@
 from rest_framework import serializers
-from .models import User, Organization
-from django.core.validators import validate_email as django_validate_email
+from .models import User, Organisation
 
 class Userserializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone']
+        fields = ['userId', 'firstName', 'lastName', 'email', 'phone']
 
-class Organizationserializer(serializers.ModelSerializer):
+class Organisationserializer(serializers.ModelSerializer):
     class Meta:
-        model = Organization
-        fields = ['id'', name', 'description']
+        model = Organisation
+        fields = ['orgId'', name', 'description']

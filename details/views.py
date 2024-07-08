@@ -6,8 +6,8 @@ from rest_framework.response import Response
 from rest_framework import serializers
 from rest_framework import status
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import Userserializer, Organizationserializer
-from .models import User, Organization
+from .serializers import Userserializer
+from .models import User, Organisation
 import jwt, datetime
 
 # Create your views here.
@@ -24,13 +24,13 @@ def user_register(request):
             user.set_password(request.data['password'])
             user.save()
             print('cool')
-            organization = Organization.objects.create(
-                name=f"{user.first_name}'s Organisation",
+            organisation = Organisation.objects.create(
+                name=f"{user.firstName}'s Organisation",
                 description=''
                 )
-            organization.users.add(user)
+            organisation.users.add(user)
             payload = {
-                'id': user.id,
+                'id': user.userId,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
                 'iat': datetime.datetime.utcnow()
             }
@@ -41,11 +41,11 @@ def user_register(request):
                 "data": {
                 "accessToken": token,
                 "user": {
-                    "userId": user.id,
-                    "firstName": user.first_name,
-                    "lastName": user.last_name,
+                    "userId": user.userId,
+                    "firstName": user.firstName,
+                    "lastName": user.lastName,
                     "email": user.email,
-                    "phone": str(user.phone),
+                    "phone": user.phone,
                 }
                 }
             }, status=status.HTTP_201_CREATED)
@@ -80,7 +80,7 @@ def login(request):
             "statusCode": 401
             }, status=status.HTTP_401_UNAUTHORIZED)
     payload = {
-            'id': user.id,
+            'id': user.userId,
             'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30),
             'iat': datetime.datetime.utcnow()
         }
@@ -92,11 +92,11 @@ def login(request):
             "data": {
             "accessToken": token,
             "user": {
-                "userId": user.id,
-                "firstName": user.first_name,
-                "lastName": user.last_name,
+                "userId": user.userId,
+                "firstName": user.firstName,
+                "lastName": user.lastName,
                 "email": user.email,
-                "phone": str(user.phone),
+                "phone": user.phone,
             }
             }
         }, status=status.HTTP_200_OK)
@@ -114,33 +114,33 @@ def authenticate(requests):
     return payload
 
 @api_view(['GET'])
-def users_record(request, Id):
+def users_record(request, id):
     payload = authenticate(request)
-    current_user = User.objects.get(id=payload['id'])
+    current_user = User.objects.get(userId=payload['id'])
     if current_user:
-        organizations = current_user.organizations.all()
-        print(organizations)
-        for organization in organizations:
-            print(organization)
-            for user in organization.users.all():
-                if user.id == Id:
-                    g_user = User.objects.get(pk=Id)
+        organisations = current_user.organisations.all()
+        print(organisations)
+        for organisation in organisations:
+            print(organisation)
+            for user in organisation.users.all():
+                if user.userId == id:
+                    g_user = User.objects.get(pk=id)
                     response = Response({
                         "status": "success",
-                        "message": "User in common organization",
+                        "message": "User in common organisation",
                         "data": {
                             "user": {
-                                "userId": g_user.id,
-                                "firstName": g_user.first_name,
-                                "lastName": g_user.last_name,
+                                "userId": g_user.userId,
+                                "firstName": g_user.firstName,
+                                "lastName": g_user.lastName,
                                 "email": g_user.email,
-                                "phone": str(g_user.phone),
+                                "phone": g_user.phone,
                             }
                         }
                     }, status=status.HTTP_200_OK)
                     return response
         return Response({
-            "error": "you have no common organization with this user"
+            "error": "you have no common organisation with this user"
         })
 
 class current_user_membership(APIView):
@@ -148,17 +148,17 @@ class current_user_membership(APIView):
         payload = authenticate(request)
         current_user = User.objects.get(id=payload['id'])
         if current_user:
-            organizations = current_user.organizations.all()
+            organisations = current_user.organisations.all()
             return Response({
                 "status": "success",
-                "message": "organizations i belong to",
+                "message": "organiations i belong to",
                 "data": {
-                    "organizations": [
+                    "organisations": [
                     {
-                        "orgId": organization.id,
-                        "name": organization.name,
-                        "description": organization.description,
-                    } for organization in organizations
+                        "orgId": organisation.orgId,
+                        "name": organisation.name,
+                        "description": organisation.description,
+                    } for organisation in organisations
                     ]
                 }
             }, status=status.HTTP_200_OK)
@@ -168,14 +168,14 @@ class current_user_membership(APIView):
         current_user = User.objects.get(id=payload['id'])
         if current_user:
             try:
-                organization = Organization.objects.create(name=request.data['name'], description=request.data['description'])
+                organisation = Organisation.objects.create(name=request.data['name'], description=request.data['description'])
                 response = Response({
                             "status": "success",
                             "message": "Organisation created successfully",
                             "data": {
-                            "orgId": organization.id, 
-                            "name": organization.name, 
-                            "description": organization.description
+                            "orgId": organisation.orgId, 
+                            "name": organisation.name, 
+                            "description": organisation.description
                             }
                         }, status=status.HTTP_200_OK)
                 return response
@@ -192,38 +192,38 @@ class current_user_membership(APIView):
 @api_view(['GET'])
 def organization_details(request, orgId):
     payload = authenticate(request)
-    current_user = User.objects.get(id=payload['id'])
+    current_user = User.objects.get(userId=payload['id'])
     if current_user:
         try:
-            organization = Organization.objects.get(pk=orgId)
-            print(organization)
+            organisation = Organisation.objects.get(pk=orgId)
+            print(organisation)
             return Response({
                 "status": "success",
-                "message": "organization found",
+                "message": "organisation found",
                 "data": {
-                        "orgId": organization.id,
-                        "name": organization.name,
-                        "description": organization.description,
+                        "orgId": organisation.orgId,
+                        "name": organisation.name,
+                        "description": organisation.description,
                 }
             }, status=status.HTTP_200_OK)
         except:
             return Response({
-                    "error": "There is no organization with the provided id"
+                    "error": "There is no organisation with the provided id"
                 })
 @api_view(['POST'])
 def user_orgg(request, orgId):
     try:
-        user = User.objects.get(id=request.data['userId'])
-        organization = Organization.objects.get(id=orgId)
-        organization.users.add(user)
-        organization.save()
+        user = User.objects.get(userId=request.data['userId'])
+        organisation = Organisation.objects.get(orgId=orgId)
+        organisation.users.add(user)
+        organisation.save()
         return Response({
             "status": "success",
             "message": "User added to organisation successfully",
         }, status=status.HTTP_200_OK)
     except:
         return Response({
-                    "error": "Adding user to organization failed"
+                    "error": "Adding user to organisation failed"
                 })
 
 

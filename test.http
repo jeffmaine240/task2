@@ -1,8 +1,8 @@
 ###
-POST  https://jeffmaine.pythonanywhere.com/auth/register
+POST  http://127.0.0.1:8000/auth/register
 Content-Type: application/json
 
-{"first_name": "aram", "last_name": "aine", "email": "aram@ainee.com", "phone": "+2347048581078", "password": "jeffmaine"}
+{"firstName": "aram", "lastName": "aine", "email": "aram@ainee.com", "phone": "+2347048581078", "password": "jeffmaine"}
 
 
 ###
@@ -30,7 +30,7 @@ GET https://jeffmaine.pythonanywhere.com/api/organisations/1
 Content-Type: application/json
 
 ###
-POST https://jeffmaine.pythonanywhere.com/api/organisations/1/users
+POST https://jeffmaine.pythonanywhere.com/api/organisations/2/users
 Content-Type: application/json
 
 {"userId": 1}
