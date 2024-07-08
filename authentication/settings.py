@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-_--003$08+h4+cs*(9@_f&q8*z4-rg-(ec=mdhz)b1om(64jit
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ["127.0.0.1", "0b65-105-119-3-246.ngrok-free.app", "jeffmaine.pythonanywhere.com"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "0b65-105-119-3-246.ngrok-free.app", "jeffmaine.pythonanywhere.com"]
+# ALLOWED_HOSTS = []
 
 # Application definition
 
@@ -38,8 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'details',
     'rest_framework',
-    'phonenumber_field',
-    
 ]
 
 
@@ -79,24 +77,24 @@ WSGI_APPLICATION = 'authentication.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': "defaultdb",
-#         'USER': 'avnadmin',
-#         'PASSWORD': 'AVNS_ZucM8xTi7ohEL9QLVEV',
-#         'HOST': "pg-357d4f42-oyeniyij43-abe4.d.aivencloud.com",
-#         'PORT': "24592",
-#         "SSL mode": "require",
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': "defaultdb",
+        'USER': 'avnadmin',
+        'PASSWORD': 'AVNS_ZucM8xTi7ohEL9QLVEV',
+        'HOST': "pg-357d4f42-oyeniyij43-abe4.d.aivencloud.com",
+        'PORT': "24592",
+        "SSL mode": "require",
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
