@@ -1,36 +1,36 @@
 ###
-POST  https://0b65-105-119-3-246.ngrok-free.app/auth/register
+POST  http://127.0.0.1:8000/auth/register
 Content-Type: application/json
 
-{"first_name": "aram", "last_name": "aine", "email": "aram@ainee.com", "phone": "+2347048581078", "password": "jeffmaine"}
+{"firstName": "ara", "lastName": "mide", "email": "aram@ide.com", "phone": "+2347048581078", "password": "jeffmaine"}
 
 
 ###
-POST https://0b65-105-119-3-246.ngrok-free.app/auth/login
+POST http://127.0.0.1:8000/auth/login
 Content-Type: application/json
 
-{"email": "aram@ainee.com",  "password": "jeffmaine"}
+{"email": "ara@mide.com",  "password": "jeffmaine"}
 
 ###
-GET https://0b65-105-119-3-246.ngrok-free.app/api/users/1
+GET http://127.0.0.1:8000/api/users/1
 Content-Type: application/json
 
 ###
-POST  https://0b65-105-119-3-246.ngrok-free.app/api/organisations
+POST  http://127.0.0.1:8000/api/organisations
 Content-Type: application/json
 
 {"name": "honey", "description": "liquidd stuff"}
 
 ###
-GET https://0b65-105-119-3-246.ngrok-free.app/api/organisations
+GET http://127.0.0.1:8000/api/organisations
 Content-Type: application/json
 
 ###
-GET https://0b65-105-119-3-246.ngrok-free.app/api/organisations/5
+GET http://127.0.0.1:8000/api/organisations/5
 Content-Type: application/json
 
 ###
-POST https://0b65-105-119-3-246.ngrok-free.app/api/organisations/2/users
+POST http://127.0.0.1:8000/api/organisations/2/users
 Content-Type: application/json
 
 {"userId": 3}

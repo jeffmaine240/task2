@@ -97,6 +97,7 @@ class TestAuth(TestCase):
         user2_data = self.user_data.copy()
         user2_data['email'] = 'jane.doe@example.com'
         user2_response = self.client.post(self.register_url, data=json.dumps(user2_data), content_type='application/json')
+        print(user2_response.json())
         organisations_url = reverse('record', args=[user2_response.json()["data"]["user"]['userId']])
         details = self.client.get(organisations_url)
         self.assertEqual(details.status_code, status.HTTP_403_FORBIDDEN) 
