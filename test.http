@@ -1,0 +1,36 @@
+###
+POST  https://jeffmaine.pythonanywhere.com/auth/register
+Content-Type: application/json
+
+{"first_name": "aram", "last_name": "aine", "email": "aram@ainee.com", "phone": "+2347048581078", "password": "jeffmaine"}
+
+
+###
+POST https://jeffmaine.pythonanywhere.com/auth/login
+Content-Type: application/json
+
+{"email": "aram@ainee.com",  "password": "jeffmaine"}
+
+###
+GET https://jeffmaine.pythonanywhere.com/api/users/1
+Content-Type: application/json
+
+###
+POST  https://jeffmaine.pythonanywhere.com/api/organisations
+Content-Type: application/json
+
+{"name": "honey", "description": "liquidd stuff"}
+
+###
+GET https://jeffmaine.pythonanywhere.com/api/organisations
+Content-Type: application/json
+
+###
+GET https://jeffmaine.pythonanywhere.com/api/organisations/1
+Content-Type: application/json
+
+###
+POST https://jeffmaine.pythonanywhere.com/api/organisations/1/users
+Content-Type: application/json
+
+{"userId": 1}
