@@ -9,7 +9,7 @@ Content-Type: application/json
 POST http://127.0.0.1:8000/auth/login
 Content-Type: application/json
 
-{"email": "ara@mide.com",  "password": "jeffmaine"}
+{"email": "aram@ide.com",  "password": "jeffmaine"}
 
 ###
 GET http://127.0.0.1:8000/api/users/1
